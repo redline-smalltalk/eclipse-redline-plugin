@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="st.redline.eclipse.sampleBuilder"
+         name="Sample Project Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder
+            hasNature="true">
+         <run
+               class="st.redline.eclipse.builder.SmallTalkSourceFileBuilder">
+         </run>
+      </builder>
+   </extension>
+   <extension
+         id="st.redline.eclipse.redlineSmalltalkNature"
+         name="Redline Smalltalk Project Nature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="st.redline.eclipse.builder.RedlineSmalltalkNature">
+         </run>
+      </runtime>
+      <builder
+            id="st.redline.eclipse.sampleBuilder">
+      </builder>
+   </extension>
+   <extension
+         id="xmlProblem"
+         name="XML Problem"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.core.resources.problemmarker">
+      </super>
+      <persistent
+            value="true">
+      </persistent>
+   </extension>
+   <extension
+         point="org.eclipse.ui.decorators">
+      <decorator
+            lightweight="true"
+            location="BOTTOM_RIGHT"
+            adaptable="true"
+            label="Resource Decorator"
+            icon="icons/redline_decorator.png"
+            class="st.redline.eclipse.decorators.RedlineSmalltalkProjectDecorator"
+            state="true"
+            id="st.redline.eclipse.decorator">
+         <enablement>
+            <and>
+               <objectClass
+                        name="org.eclipse.core.resources.IProject">
+                  </objectClass>
+            </and>
+         </enablement>
+      </decorator>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="Smalltalk Editor"
+            extensions="rl"
+            icon="icons/redline.png"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            class="st.redline.eclipse.editors.XMLEditor"
+            id="st.redline.eclipse.editors.XMLEditor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="Redline Smalltalk"
+            id="st.redline.eclipse">
+      </category>
+      <wizard
+            name="Smalltalk Source File"
+            icon="icons/smalltalk.png"
+            category="st.redline.eclipse"
+            class="st.redline.eclipse.wizards.file.NewRedlineSourceFileWizard"
+            id="st.redline.eclipse.wizards.file.NewRedlineSourceFileWizard">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            name="Redline Smalltalk"
+            class="st.redline.eclipse.preferences.RedlinePreferencePage"
+            id="st.redline.eclipse.preferences.RedlinePreferencePage">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="st.redline.eclipse.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="Redline Smalltalk"
+            id="st.redline.eclipse.commands.category">
+      </category>
+      <command
+            name="Add/Remove Redline Smalltalk Nature"
+            categoryId="st.redline.eclipse.commands.category"
+            id="st.redline.eclipse.commands.convertProjectCommand">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="st.redline.eclipse.commands.convertProjectCommand"
+            class="st.redline.eclipse.handlers.ConvertProjectHandler">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="st.redline.eclipse.commands.convertProjectCommand"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+6"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+         
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.projectConfigure?after=additions">
+
+            <command
+                  commandId="st.redline.eclipse.commands.convertProjectCommand"
+                  mnemonic="S"
+                  id="test2.menus.convertProjectCommand">
+            </command>
+       
+      </menuContribution>
+   </extension>
+   
+    <extension point="org.eclipse.ui.propertyPages">
+	  <page
+	        class="st.redline.eclipse.properties.RedlinePropertyPage"
+	            id="st.redline.eclipse.propertyPage"
+	            name="Redline Smalltalk">
+	     <enabledWhen>
+	         <adapt type="org.eclipse.core.resources.IProject">
+	              <test
+	                 property="org.eclipse.core.resources.projectNature"
+	                 value="st.redline.eclipse.redlineSmalltalkNature"/>
+	         </adapt>         
+	     </enabledWhen>
+	  </page>
+   </extension>
+
+<extension point="org.eclipse.debug.core.launchConfigurationTypes">
+    <launchConfigurationType
+        name="Redline Program"
+        delegate="st.redline.eclipse.launch.RedlineProgramLaunchConfigurationDelegate"
+        modes="run, debug"               
+        id="st.redline.eclipse.launching.RedlineProgram">        
+    </launchConfigurationType>
+</extension>
+
+<extension point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+    <launchConfigurationTypeImage
+        icon="icons/redline.png"
+        configTypeID="st.redline.eclipse.launching.RedlineProgram"
+        id="st.redline.eclipse.launchConfigurationTypeImage.redlineProgram">
+    </launchConfigurationTypeImage>
+</extension>
+
+<extension point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+    <launchConfigurationTabGroup
+        type="st.redline.eclipse.launching.RedlineProgram"
+        class="st.redline.eclipse.launch.RedlineProgramTabGroup"
+        id="st.redline.eclipse.launchConfigurationTabGroup.redlineProgram">
+    </launchConfigurationTabGroup>
+</extension>
+
+<extension point="org.eclipse.debug.ui.launchShortcuts">
+    <shortcut
+        id="st.redline.eclipse.launch.RedlineProgramShortcut"
+        class="st.redline.eclipse.launch.RedlineProgramLaunchShortcut"
+        label="Redline Program"
+        icon="icons/redline.png"
+        modes="run, debug">
+            <perspective id="org.eclipse.jdt.ui.JavaPerspective"/>
+            <perspective id="org.eclipse.jdt.ui.JavaHierarchyPerspective"/>
+            <perspective id="org.eclipse.jdt.ui.JavaBrowsingPerspective"/>
+            <perspective id="org.eclipse.debug.ui.DebugPerspective"/>
+    </shortcut>
+</extension>
+</plugin>
