@@ -13,6 +13,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 
+import st.redline.eclipse.Activator;
+
 public class RedlineProgramLaunchShortcut implements ILaunchShortcut {
 
 	@Override
@@ -40,12 +42,11 @@ public class RedlineProgramLaunchShortcut implements ILaunchShortcut {
 				config.launch(mode, null);
 			}
 		} catch (CoreException e) {
-			/* Handle exceptions */
+			Activator.getDefault().log("Unable to perform launch.", e);
 		}
 	}
 
 	private ILaunchConfiguration findLaunchConfiguration(IType type, String mode) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

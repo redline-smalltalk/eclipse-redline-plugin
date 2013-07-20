@@ -16,6 +16,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.PropertyPage;
 
+import st.redline.eclipse.Activator;
+
 public class RedlinePropertyPage extends PropertyPage {
 
 	private static final String SOURCE_PATH_TITLE = "&Source path:";
@@ -57,8 +59,7 @@ public class RedlinePropertyPage extends PropertyPage {
 				sourcePath.setText(SOURCE_PATH_DEFAULT);
 			}
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Activator.getDefault().log("Unable to create property page.", e);
 		}
 
 		return composite;

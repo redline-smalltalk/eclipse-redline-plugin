@@ -23,6 +23,7 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 
+import st.redline.eclipse.Activator;
 import st.redline.eclipse.properties.RedlinePropertyPage;
 
 public class SmallTalkSourceFileBuilder extends IncrementalProjectBuilder {
@@ -73,13 +74,9 @@ public class SmallTalkSourceFileBuilder extends IncrementalProjectBuilder {
  				if (isSmallTalkSourceFile(file)) {
 					try {
 						copyToBin(file, getRedlineSourcePath());
-					} catch (JavaModelException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (CoreException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					} catch (Exception e) {
+						Activator.getDefault().log("Failed to copy file.", e);
+					} 
 				} else {
 					return false;
 				}
@@ -113,9 +110,8 @@ public class SmallTalkSourceFileBuilder extends IncrementalProjectBuilder {
 		return Path.fromOSString(redlineSourceDir);
 	}
 
-	public void removeFromBin(IResource resource) {
-		// TODO Auto-generated method stub
-		
+	public void removeFromBin(IResource resource) throws CoreException {
+		resource.delete(true, null);
 	}
 
 	public void copyToBin(IFile file, IPath sourcePath) throws CoreException {

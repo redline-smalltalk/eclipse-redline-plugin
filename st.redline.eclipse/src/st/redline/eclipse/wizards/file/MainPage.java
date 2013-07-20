@@ -93,8 +93,6 @@ public class MainPage extends WizardPage {
 			
 			@Override
 			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
 			
 			@Override

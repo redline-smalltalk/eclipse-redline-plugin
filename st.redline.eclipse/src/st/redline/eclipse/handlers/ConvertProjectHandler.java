@@ -14,6 +14,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+import st.redline.eclipse.Activator;
 import st.redline.eclipse.builder.RedlineSmalltalkNature;
 
 /**
@@ -80,7 +81,7 @@ public class ConvertProjectHandler extends AbstractHandler {
 			description.setNatureIds(newNatures);
 			project.setDescription(description, null);
 		} catch (CoreException e) {
-			//TODO: add PDE error log message here
+			Activator.getDefault().log("Failed to modify project nature.", e);
 		}
 	}
 }
