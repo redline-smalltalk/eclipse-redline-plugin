@@ -10,13 +10,13 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jface.text,
  org.eclipse.ui.editors,
  org.eclipse.ui.ide,
- org.eclipse.jdt;bundle-version="3.8.1",
- org.eclipse.jdt.core;bundle-version="3.8.3",
- org.eclipse.debug.core;bundle-version="3.7.100",
- org.eclipse.debug.ui;bundle-version="3.8.2",
- org.eclipse.jdt.debug;bundle-version="3.7.101",
- org.eclipse.jdt.debug.ui;bundle-version="3.6.100",
- org.eclipse.jdt.launching;bundle-version="3.6.101",
- org.eclipse.jdt.ui;bundle-version="3.8.2"
+ org.eclipse.jdt,
+ org.eclipse.jdt.core,
+ org.eclipse.debug.core,
+ org.eclipse.debug.ui,
+ org.eclipse.jdt.debug,
+ org.eclipse.jdt.debug.ui,
+ org.eclipse.jdt.launching,
+ org.eclipse.jdt.ui
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
