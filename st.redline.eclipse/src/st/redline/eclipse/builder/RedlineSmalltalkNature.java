@@ -3,9 +3,13 @@
  *******************************************************************************/
 package st.redline.eclipse.builder;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IFolder;
@@ -20,6 +24,7 @@ import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 import st.redline.eclipse.Activator;
@@ -31,6 +36,12 @@ public class RedlineSmalltalkNature implements IProjectNature {
 	 * ID of this project nature
 	 */
 	public static final String NATURE_ID = "st.redline.eclipse.redlineSmalltalkNature";
+
+
+	private static final String MAVEN_SOURCE_STRUCTURE = "src/main/java";
+
+
+	private static final String MAVEN_TEST_STRUCTURE = "src/test/java";
 
 	
 	private IProject project;
@@ -64,39 +75,63 @@ public class RedlineSmalltalkNature implements IProjectNature {
 		desc.setBuildSpec(newCommands);
 		project.setDescription(desc, null);
 		
-		IFolder folder = project.getFolder(getRedlineSourceRootDirectory());
-		
-		if (!folder.exists()) {
-			folder.create(false, true, null);
-		}
-		
 		IJavaProject javaProject = JavaCore.create(project);
-		
-		IPackageFragmentRoot root = javaProject.getPackageFragmentRoot(folder);
-		String[] redlineClasspathPaths = getRedlineClasspathEntries();
-		IClasspathEntry[] oldEntries = javaProject.getRawClasspath();
-		IClasspathEntry[] newEntries = new IClasspathEntry[oldEntries.length + 1 + redlineClasspathPaths.length];
-		System.arraycopy(oldEntries, 0, newEntries, 0, oldEntries.length);
-		newEntries[oldEntries.length] = JavaCore.newSourceEntry(root.getPath());
-		
-		int offset = oldEntries.length + 1;
-		
-		for (String rlcpi : redlineClasspathPaths) {
-			newEntries[offset] = JavaCore.newLibraryEntry(
-					new Path(rlcpi), null, null);
-			offset++;
+		List<IPackageFragmentRoot> soucreRoots = new ArrayList<IPackageFragmentRoot>();
+		for (String folderPath : getRedlineSourceRootDirectory(javaProject)) {
+			IFolder folder = project.getFolder(folderPath);
+			
+			if (!folder.exists()) {
+				folder.create(false, true, null);
+			}
+			
+			soucreRoots.add(javaProject.getPackageFragmentRoot(folder));
 		}
 		
-		javaProject.setRawClasspath(newEntries, null);
+		List<IClasspathEntry> classpathEntries = new ArrayList<IClasspathEntry>(Arrays.asList(javaProject.getRawClasspath()));
+		
+		for (IPackageFragmentRoot fr : soucreRoots) {
+			classpathEntries.add(JavaCore.newSourceEntry(fr.getPath()));
+		}
+		
+		for (String rlcpi : getRedlineClasspathEntries()) {
+			classpathEntries.add(JavaCore.newLibraryEntry(
+					new Path(rlcpi), null, null));
+		}
+		
+		javaProject.setRawClasspath(classpathEntries.toArray(new IClasspathEntry[classpathEntries.size()]), null);
 	}
 
-	public static String getRedlineSourceRootDirectory() {
-		String sourceRoot = Activator.getDefault().getPreferenceStore().getString(PreferenceConstants.P_SOURCE_ROOT_PATH);
-		if (sourceRoot == null) {
-			sourceRoot = Activator.REDLINE_DEFAULT_SOURCE_DIR;
+	public static Iterable<String> getRedlineSourceRootDirectory(IJavaProject javaProject) throws JavaModelException {
+		Set<String> paths = new HashSet<String>(1);
+		
+		if (javaProject != null && javaProject.getAllPackageFragmentRoots() != null) {
+			
+			for (IPackageFragmentRoot root : javaProject.getAllPackageFragmentRoots()) {
+				if (root.getKind() == IPackageFragmentRoot.K_SOURCE) {
+					if (root.getPath().toOSString().endsWith(MAVEN_SOURCE_STRUCTURE)) {
+						paths.add("src" + File.separator + "main" + File.separator + "smalltalk");
+						continue;
+					} else if (root.getPath().toOSString().endsWith(MAVEN_TEST_STRUCTURE)) {
+						paths.add("src" + File.separator + "test" + File.separator + "smalltalk");
+						continue;
+					}
+				} 
+			}
+			
+			if (!paths.isEmpty()) {
+				return paths;
+			}
 		}
 		
-		return sourceRoot;
+		//If cannot access Java project source folder info, use configured via prefs.
+		String sourceRoot = Activator.getDefault().getPreferenceStore().getString(PreferenceConstants.P_SOURCE_ROOT_PATH);
+		if (sourceRoot != null) {
+			paths.add(sourceRoot);
+		} else {
+			paths.add(Activator.REDLINE_DEFAULT_SOURCE_DIR);
+		}
+		
+		return paths;
 	}
 
 	private String[] getRedlineClasspathEntries() {
@@ -128,29 +163,31 @@ public class RedlineSmalltalkNature implements IProjectNature {
 			}
 		}
 		
-		IFolder folder = project.getFolder(getRedlineSourceRootDirectory());
 		IJavaProject javaProject = JavaCore.create(project);
-		
-		List<String> redlineClasspathPaths = Arrays.asList(getRedlineClasspathEntries());
-		IClasspathEntry[] oldEntries = javaProject.getRawClasspath();
-		List<IClasspathEntry> cleanEntries = new ArrayList<IClasspathEntry>();
-		
-		for (IClasspathEntry e : oldEntries) {
-			if (e.getEntryKind() == IClasspathEntry.CPE_SOURCE) {
-				if (e.getPath().equals(folder)) {
-					continue;
+		for (String folderPath : getRedlineSourceRootDirectory(javaProject)) {
+			IFolder folder = project.getFolder(folderPath);
+			
+			List<String> redlineClasspathPaths = Arrays.asList(getRedlineClasspathEntries());
+			IClasspathEntry[] oldEntries = javaProject.getRawClasspath();
+			List<IClasspathEntry> cleanEntries = new ArrayList<IClasspathEntry>();
+			
+			for (IClasspathEntry e : oldEntries) {
+				if (e.getEntryKind() == IClasspathEntry.CPE_SOURCE) {
+					if (e.getPath().equals(folder)) {
+						continue;
+					}
 				}
-			}
-			if (e.getEntryKind() == IClasspathEntry.CPE_LIBRARY) {
-				if (redlineClasspathPaths.contains(e.getPath().toOSString())) {
-					continue;
+				if (e.getEntryKind() == IClasspathEntry.CPE_LIBRARY) {
+					if (redlineClasspathPaths.contains(e.getPath().toOSString())) {
+						continue;
+					}
 				}
+				
+				cleanEntries.add(e);
 			}
 			
-			cleanEntries.add(e);
+			javaProject.setRawClasspath(cleanEntries.toArray(new IClasspathEntry[cleanEntries.size()]), null);
 		}
-		
-		javaProject.setRawClasspath(cleanEntries.toArray(new IClasspathEntry[cleanEntries.size()]), null);
 	}
 
 	/*
