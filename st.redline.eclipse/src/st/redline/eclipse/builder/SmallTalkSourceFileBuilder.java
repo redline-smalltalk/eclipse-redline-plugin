@@ -28,7 +28,7 @@ import st.redline.eclipse.properties.RedlinePropertyPage;
 
 public class SmallTalkSourceFileBuilder extends IncrementalProjectBuilder {
 	
-	public static final String BUILDER_ID = "st.redline.eclipse.sampleBuilder";
+	public static final String BUILDER_ID = "st.redline.eclipse.builder";
 
 	class SampleDeltaVisitor implements IResourceDeltaVisitor {
 		

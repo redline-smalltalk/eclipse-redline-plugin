@@ -3,7 +3,7 @@
 <plugin>
 
    <extension
-         id="st.redline.eclipse.sampleBuilder"
+         id="st.redline.eclipse.builder"
          name="Sample Project Builder"
          point="org.eclipse.core.resources.builders">
       <builder
@@ -23,7 +23,7 @@
          </run>
       </runtime>
       <builder
-            id="st.redline.eclipse.sampleBuilder">
+            id="st.redline.eclipse.builder">
       </builder>
    </extension>
    <extension
