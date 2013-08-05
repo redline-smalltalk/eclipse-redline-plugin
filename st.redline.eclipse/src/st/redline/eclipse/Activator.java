@@ -20,7 +20,7 @@ public class Activator extends AbstractUIPlugin {
 
 	public static final String REDLINE_SMALLTALK_LAUNCH_CLASSNAME = "st.redline.Stic";
 
-	public static final String REDLINE_DEFAULT_SOURCE_DIR = "redline";
+	public static final String REDLINE_DEFAULT_SOURCE_DIR = "smalltalk";
 
 	// The shared instance
 	private static Activator plugin;

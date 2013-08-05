@@ -31,6 +31,17 @@ import st.redline.eclipse.Activator;
 public class RedlinePreferencePage extends FieldEditorPreferencePage implements
 		IWorkbenchPreferencePage {
 
+	/*
+	 * The following constants should be changed/augmented if Redline Smalltalk runtime dependencies change.
+	 */
+	private static final String REDLINE_BIN_JAR_PREFIX = "redline-";
+	private static final String ASM_BIN_JAR_PREFIX = "asm-";
+	private static final String ANTLR_BIN_JAR_PREFIX = "antlr-runtime-";
+	
+	
+	protected static final String JAR_FILE_EXTENSION = ".JAR";
+	private static final String LIB_DIR_NAME = "lib";
+
 	public RedlinePreferencePage() {
 		super(GRID);
 		setPreferenceStore(Activator.getDefault().getPreferenceStore());
@@ -86,11 +97,11 @@ public class RedlinePreferencePage extends FieldEditorPreferencePage implements
 					@Override
 					public boolean accept(File arg0, String arg1) {
 
-						return arg1.toUpperCase().endsWith(".JAR");
+						return arg1.toUpperCase().endsWith(JAR_FILE_EXTENSION);
 					}
 				})));
 
-		File redlineLibDir = new File(redlineDistPath, "lib");
+		File redlineLibDir = new File(redlineDistPath, LIB_DIR_NAME);
 		if (redlineLibDir.exists() && redlineLibDir.isDirectory()) {
 			children.addAll(Arrays.asList(redlineLibDir
 					.listFiles(new FilenameFilter() {
@@ -98,7 +109,7 @@ public class RedlinePreferencePage extends FieldEditorPreferencePage implements
 						@Override
 						public boolean accept(File arg0, String arg1) {
 
-							return arg1.toUpperCase().endsWith(".JAR");
+							return arg1.toUpperCase().endsWith(JAR_FILE_EXTENSION);
 						}
 					})));
 		}
@@ -112,11 +123,11 @@ public class RedlinePreferencePage extends FieldEditorPreferencePage implements
 					&& antlrJarPath != null) {
 				break;
 			}
-			if (child.getName().startsWith("redline-")) {
+			if (child.getName().startsWith(REDLINE_BIN_JAR_PREFIX)) {
 				redlineJarPath = child;
-			} else if (child.getName().startsWith("asm-")) {
+			} else if (child.getName().startsWith(ASM_BIN_JAR_PREFIX)) {
 				asmJarPath = child;
-			} else if (child.getName().startsWith("antlr-runtime-")) {
+			} else if (child.getName().startsWith(ANTLR_BIN_JAR_PREFIX)) {
 				antlrJarPath = child;
 			}
 		}

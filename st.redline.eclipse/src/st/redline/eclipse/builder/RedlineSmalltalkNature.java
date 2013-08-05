@@ -41,6 +41,8 @@ public class RedlineSmalltalkNature implements IProjectNature {
 	 * @see org.eclipse.core.resources.IProjectNature#configure()
 	 */
 	public void configure() throws CoreException {
+		// TODO: validate that user preferences have been updated with real location to REDLINE HOME before proceeding, otherwise present model dialog and abort.
+		
 		IProjectDescription desc = project.getDescription();
 		ICommand[] commands = desc.getBuildSpec();
 

@@ -97,7 +97,7 @@ public class RedlineProgramMainTab extends JavaLaunchTab {
 		((GridLayout) comp.getLayout()).verticalSpacing = 0;
 		createProjectEditor(comp);
 		createVerticalSpacer(comp, 1);
-		createMainTypeEditor(comp, "Redline Class");
+		createMainTypeEditor(comp, "Smalltalk Class");
 		
 		setControl(comp);
 	}
@@ -117,7 +117,7 @@ public class RedlineProgramMainTab extends JavaLaunchTab {
 
 	@Override
 	public String getName() {
-		return "redline";
+		return "Redline Smalltalk";
 	}
 
 	/**
@@ -144,7 +144,7 @@ public class RedlineProgramMainTab extends JavaLaunchTab {
 				JavaElementLabelProvider.SHOW_DEFAULT);
 		ElementListSelectionDialog dialog = new ElementListSelectionDialog(
 				getShell(), labelProvider);
-		dialog.setTitle("Redline Launcher");
+		dialog.setTitle("Redline Smalltalk Launcher");
 		dialog.setMessage("Launch a redline program with this dialog");
 		try {
 			dialog.setElements(JavaCore.create(getWorkspaceRoot())
