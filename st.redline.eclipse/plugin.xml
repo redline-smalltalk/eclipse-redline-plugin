@@ -83,6 +83,20 @@
       </wizard>
    </extension>
    <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="Redline Smalltalk"
+            id="st.redline.eclipse">
+      </category>
+      <wizard
+            name="Smalltalk Project"
+            icon="icons/smalltalk.png"
+            category="st.redline.eclipse"
+            class="st.redline.eclipse.wizards.project.NewRedlineProjectWizard"
+            id="st.redline.eclipse.wizards.project.NewRedlineProjectWizard">
+      </wizard>
+   </extension>
+   <extension
          point="org.eclipse.ui.preferencePages">
       <page
             name="Redline Smalltalk"

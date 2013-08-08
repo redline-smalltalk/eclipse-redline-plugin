@@ -56,7 +56,7 @@ public class ConvertProjectHandler extends AbstractHandler {
 	 * @param project
 	 *            to have sample nature added or removed
 	 */
-	private void toggleNature(IProject project) {
+	public static void toggleNature(IProject project) {
 		try {
 			IProjectDescription description = project.getDescription();
 			String[] natures = description.getNatureIds();
