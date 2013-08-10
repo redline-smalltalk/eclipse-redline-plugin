@@ -90,8 +90,9 @@
       </category>
       <wizard
             name="Smalltalk Project"
-            icon="icons/smalltalk.png"
+            icon="icons/redline.png"
             category="st.redline.eclipse"
+            project="true" 
             class="st.redline.eclipse.wizards.project.NewRedlineProjectWizard"
             id="st.redline.eclipse.wizards.project.NewRedlineProjectWizard">
       </wizard>

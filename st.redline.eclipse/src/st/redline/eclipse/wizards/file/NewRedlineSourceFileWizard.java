@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jdt.internal.ui.JavaPlugin;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
@@ -43,6 +44,9 @@ public class NewRedlineSourceFileWizard extends Wizard implements INewWizard {
 	public NewRedlineSourceFileWizard() {
 		super();
 		setNeedsProgressMonitor(true);
+		setDefaultPageImageDescriptor(Activator.getImageDescriptor("icons/smalltalk_file_wizard.png"));
+		//setDialogSettings(JavaPlugin.getDefault().getDialogSettings());
+		setWindowTitle("New Smalltalk File");
 	}
 
 	public void addPages() {

@@ -26,12 +26,13 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard;
 
+import st.redline.eclipse.Activator;
 import st.redline.eclipse.handlers.ConvertProjectHandler;
 
 public class NewRedlineProjectWizard extends NewElementWizard implements IExecutableExtension {
 
-	private NewJavaProjectWizardPageOne fFirstPage;
-	private NewJavaProjectWizardPageTwo fSecondPage;
+	private NewRedlineProjectWizardPageOne fFirstPage;
+	private NewRedlineProjectWizardPageTwo fSecondPage;
 
 	private IConfigurationElement fConfigElement;
 
@@ -39,8 +40,8 @@ public class NewRedlineProjectWizard extends NewElementWizard implements IExecut
 		this(null, null);
 	}
 
-	public NewRedlineProjectWizard(NewJavaProjectWizardPageOne pageOne, NewJavaProjectWizardPageTwo pageTwo) {
-		//setDefaultPageImageDescriptor(JavaPluginImages.DESC_WIZBAN_NEWJPRJ);
+	public NewRedlineProjectWizard(NewRedlineProjectWizardPageOne pageOne, NewRedlineProjectWizardPageTwo pageTwo) {
+		setDefaultPageImageDescriptor(Activator.getImageDescriptor("icons/redline_wizard.png"));
 		//setDialogSettings(JavaPlugin.getDefault().getDialogSettings());
 		setWindowTitle("New Redline Smalltalk Project");
 
@@ -58,7 +59,7 @@ public class NewRedlineProjectWizard extends NewElementWizard implements IExecut
 		addPage(fFirstPage);
 
 		if (fSecondPage == null)
-			fSecondPage= new NewJavaProjectWizardPageTwo(fFirstPage);
+			fSecondPage= new NewRedlineProjectWizardPageTwo(fFirstPage);
 		addPage(fSecondPage);
 
 		fFirstPage.init(getSelection(), getActivePart());
