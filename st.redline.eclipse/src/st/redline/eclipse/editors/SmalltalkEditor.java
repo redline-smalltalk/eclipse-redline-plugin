@@ -5,19 +5,19 @@ package st.redline.eclipse.editors;
 
 import org.eclipse.ui.editors.text.TextEditor;
 
-public class XMLEditor extends TextEditor {
+public class SmalltalkEditor extends TextEditor {
 
-	private ColorManager colorManager;
+	private SmalltalkEditorColorManager colorManager;
 
-	public XMLEditor() {
+	public SmalltalkEditor() {
 		super();
-		colorManager = new ColorManager();
-		setSourceViewerConfiguration(new XMLConfiguration(colorManager));
-		setDocumentProvider(new XMLDocumentProvider());
+		colorManager = new SmalltalkEditorColorManager();
+		setSourceViewerConfiguration(new SmalltalkEditorConfiguration(colorManager));
+		//setDocumentProvider(new SmalltalkDocumentProvider());
 	}
+
 	public void dispose() {
 		colorManager.dispose();
 		super.dispose();
 	}
-
 }

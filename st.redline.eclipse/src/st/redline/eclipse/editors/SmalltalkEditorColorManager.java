@@ -11,15 +11,16 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 
-public class ColorManager {
+public class SmalltalkEditorColorManager {
 
 	protected Map<RGB, Color> fColorTable = new HashMap<RGB, Color>(10);
 
 	public void dispose() {
 		Iterator<Color> e = fColorTable.values().iterator();
 		while (e.hasNext())
-			 ((Color) e.next()).dispose();
+			((Color) e.next()).dispose();
 	}
+
 	public Color getColor(RGB rgb) {
 		Color color = fColorTable.get(rgb);
 		if (color == null) {

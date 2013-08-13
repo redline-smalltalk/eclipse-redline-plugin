@@ -61,10 +61,10 @@
          point="org.eclipse.ui.editors">
       <editor
             name="Smalltalk Editor"
-            extensions="rl"
+            extensions="st"
             icon="icons/redline.png"
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
-            class="st.redline.eclipse.editors.XMLEditor"
+            class="st.redline.eclipse.editors.SmalltalkEditor"
             id="st.redline.eclipse.editors.XMLEditor">
       </editor>
    </extension>
