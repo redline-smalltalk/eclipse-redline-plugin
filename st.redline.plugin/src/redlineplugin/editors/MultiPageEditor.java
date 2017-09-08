@@ -53,8 +53,6 @@ import st.redline.SmalltalkRuntimeModule;
 import st.redline.smalltalk.Method;
 import st.redline.smalltalk.impl.MethodImpl;
 
-import static org.eclipse.xtext.xtend2.lib.EObjectExtensions.*;
-
 /**
  * An example showing how to create a multi-page editor. This example has 3
  * pages:
