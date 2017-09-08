@@ -20,5 +20,7 @@ Import-Package: org.apache.log4j,
  org.apache.commons.logging
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: st.redline.ui.contentassist.antlr,
- st.redline.ui.internal
+ st.redline.ui.internal,
+ st.redline.ui.quickfix,
+ st.redline.ui.contentassist
 Bundle-Activator: st.redline.ui.internal.SmalltalkActivator
