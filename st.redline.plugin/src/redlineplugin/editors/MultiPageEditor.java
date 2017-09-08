@@ -14,17 +14,14 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.RegistryFactory;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.FontDialog;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.IEditorInput;
@@ -36,20 +33,12 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.MultiPageEditorPart;
-import org.eclipse.xtext.EcoreUtil2;
-import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
-import org.eclipse.xtext.parseTreeConstruction.XtextParsetreeConstructor;
-import org.eclipse.xtext.parsetree.reconstr.Serializer;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-
-import st.redline.SmalltalkRuntimeModule;
 import st.redline.smalltalk.Method;
 import st.redline.smalltalk.impl.MethodImpl;
 
