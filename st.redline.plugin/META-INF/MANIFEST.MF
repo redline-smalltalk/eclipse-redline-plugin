@@ -30,7 +30,7 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.1.1";visibility:=reexport,
 Import-Package: org.apache.log4j,
  org.apache.commons.logging,
  org.eclipse.xtext.xbase.lib,
- org.eclipse.xtext.xtend2.lib
+ org.eclipse.xtend2.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: redlineplugin,
  redlineplugin.editors,
